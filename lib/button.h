@@ -21,13 +21,19 @@
 - (void)dealloc {
   int err; 
 
+  err = js_delete_reference(env, on_mouse_down);
+  assert(err == 0);
+
+  err = js_delete_reference(env, on_mouse_up);
+  assert(err == 0);
+
   err = js_delete_reference(env, ctx);
   assert(err == 0);
 
   [super dealloc];
 }
 
-- (void)mouseDown:(NSEvent *)event {
+- (void)callCallback:(js_ref_t *)ref {
   int err;
 
   js_handle_scope_t *scope;
@@ -39,7 +45,7 @@
   assert(err == 0);
 
   js_value_t *callback;
-  err = js_get_reference_value(env, on_mouse_down, &callback);
+  err = js_get_reference_value(env, ref, &callback);
   assert(err == 0);
 
   err = js_call_function(env, receiver, callback, 0, NULL, NULL);
@@ -47,32 +53,15 @@
 
   err = js_close_handle_scope(env, scope);
   assert(err == 0);
-
-  [super mouseDown:event];
 }
 
-- (void)mouseUp:(NSEvent *)event {
-  int err;
-
-  js_handle_scope_t *scope;
-  err = js_open_handle_scope(env, &scope);
-  assert(err == 0);
-
-  js_value_t *receiver;
-  err = js_get_reference_value(env, ctx, &receiver);
-  assert(err == 0);
-
-  js_value_t *callback;
-  err = js_get_reference_value(env, on_mouse_up, &callback);
-  assert(err == 0);
-
-  err = js_call_function(env, receiver, callback, 0, NULL, NULL);
-  (void) err;
-
-  err = js_close_handle_scope(env, scope);
-  assert(err == 0);
-
-  [super mouseUp:event];
+- (void)mouseDown:(NSEvent *)event {
+  [self callCallback:on_mouse_down];
+  [super mouseDown:event];
+  // NSButton handles the full press/release cycle inside mouseDown,
+  // so a mouseUp override is not called. Custom mouse tracking
+  // would be needed to expose the original mouseUp event data.
+  [self callCallback:on_mouse_up];
 }
 
 @end

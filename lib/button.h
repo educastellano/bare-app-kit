@@ -12,6 +12,7 @@
   js_ref_t *ctx;
   js_ref_t *on_mouse_down;
   js_ref_t *on_mouse_up;
+  js_ref_t *on_click;
 }
 
 @end
@@ -25,6 +26,9 @@
   assert(err == 0);
 
   err = js_delete_reference(env, on_mouse_up);
+  assert(err == 0);
+
+  err = js_delete_reference(env, on_click);
   assert(err == 0);
 
   err = js_delete_reference(env, ctx);
@@ -64,19 +68,23 @@
   [self callCallback:on_mouse_up];
 }
 
+- (void)onClick:(NSEvent *)event {
+  [self callCallback:on_click];
+}
+
 @end
 
 static js_value_t *
 bare_app_kit_button_init(js_env_t *env, js_callback_info_t *info) {
   int err;
 
-  size_t argc = 7;
-  js_value_t *argv[7];
+  size_t argc = 8;
+  js_value_t *argv[8];
 
   err = js_get_callback_info(env, info, &argc, argv, NULL, NULL);
   assert(err == 0);
 
-  assert(argc == 7);
+  assert(argc == 8);
 
   double x;
   err = js_get_value_double(env, argv[0], &x);
@@ -113,6 +121,12 @@ bare_app_kit_button_init(js_env_t *env, js_callback_info_t *info) {
 
     err = js_create_reference(env, argv[6], 1, &handle->on_mouse_up);
     assert(err == 0);
+
+    err = js_create_reference(env, argv[7], 1, &handle->on_click);
+    assert(err == 0);
+
+    [handle setTarget:handle];
+    [handle setAction:@selector(onClick:)];
   }
 
   return result;

@@ -37,7 +37,7 @@
   [super dealloc];
 }
 
-- (void)callCallback:(js_ref_t *)ref {
+- (void)mouseDown:(NSEvent *)event {
   int err;
 
   js_handle_scope_t *scope;
@@ -49,7 +49,37 @@
   assert(err == 0);
 
   js_value_t *callback;
-  err = js_get_reference_value(env, ref, &callback);
+  err = js_get_reference_value(env, on_mouse_down, &callback);
+  assert(err == 0);
+
+  err = js_call_function(env, receiver, callback, 0, NULL, NULL);
+  (void) err;
+
+  err = js_close_handle_scope(env, scope);
+  assert(err == 0);
+
+  [super mouseDown:event];
+
+  // NSButton handles the full press/release cycle inside mouseDown,
+  // so a mouseUp override is not called. Custom mouse tracking
+  // would be needed to expose the original mouseUp event data, and
+  // the correct order of events (currently click happens before mouseUp).
+  [self mouseUpSynthetic];
+}
+
+- (void)mouseUpSynthetic {
+  int err;
+
+  js_handle_scope_t *scope;
+  err = js_open_handle_scope(env, &scope);
+  assert(err == 0);
+
+  js_value_t *receiver;
+  err = js_get_reference_value(env, ctx, &receiver);
+  assert(err == 0);
+
+  js_value_t *callback;
+  err = js_get_reference_value(env, on_mouse_up, &callback);
   assert(err == 0);
 
   err = js_call_function(env, receiver, callback, 0, NULL, NULL);
@@ -59,17 +89,26 @@
   assert(err == 0);
 }
 
-- (void)mouseDown:(NSEvent *)event {
-  [self callCallback:on_mouse_down];
-  [super mouseDown:event];
-  // NSButton handles the full press/release cycle inside mouseDown,
-  // so a mouseUp override is not called. Custom mouse tracking
-  // would be needed to expose the original mouseUp event data.
-  [self callCallback:on_mouse_up];
-}
+- (void)onClick:(id)sender {
+  int err;
 
-- (void)onClick:(NSEvent *)event {
-  [self callCallback:on_click];
+  js_handle_scope_t *scope;
+  err = js_open_handle_scope(env, &scope);
+  assert(err == 0);
+
+  js_value_t *receiver;
+  err = js_get_reference_value(env, ctx, &receiver);
+  assert(err == 0);
+
+  js_value_t *callback;
+  err = js_get_reference_value(env, on_click, &callback);
+  assert(err == 0);
+
+  err = js_call_function(env, receiver, callback, 0, NULL, NULL);
+  (void) err;
+
+  err = js_close_handle_scope(env, scope);
+  assert(err == 0);
 }
 
 @end

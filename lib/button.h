@@ -59,34 +59,6 @@
   assert(err == 0);
 
   [super mouseDown:event];
-
-  // NSButton handles the full press/release cycle inside mouseDown,
-  // so a mouseUp override is not called. Custom mouse tracking
-  // would be needed to expose the original mouseUp event data, and
-  // the correct order of events (currently click happens before mouseUp).
-  [self mouseUpSynthetic];
-}
-
-- (void)mouseUpSynthetic {
-  int err;
-
-  js_handle_scope_t *scope;
-  err = js_open_handle_scope(env, &scope);
-  assert(err == 0);
-
-  js_value_t *receiver;
-  err = js_get_reference_value(env, ctx, &receiver);
-  assert(err == 0);
-
-  js_value_t *callback;
-  err = js_get_reference_value(env, on_mouse_up, &callback);
-  assert(err == 0);
-
-  err = js_call_function(env, receiver, callback, 0, NULL, NULL);
-  (void) err;
-
-  err = js_close_handle_scope(env, scope);
-  assert(err == 0);
 }
 
 - (void)onClick:(id)sender {
@@ -117,13 +89,13 @@ static js_value_t *
 bare_app_kit_button_init(js_env_t *env, js_callback_info_t *info) {
   int err;
 
-  size_t argc = 8;
-  js_value_t *argv[8];
+  size_t argc = 7;
+  js_value_t *argv[7];
 
   err = js_get_callback_info(env, info, &argc, argv, NULL, NULL);
   assert(err == 0);
 
-  assert(argc == 8);
+  assert(argc == 7);
 
   double x;
   err = js_get_value_double(env, argv[0], &x);
@@ -158,10 +130,7 @@ bare_app_kit_button_init(js_env_t *env, js_callback_info_t *info) {
     err = js_create_reference(env, argv[5], 1, &handle->on_mouse_down);
     assert(err == 0);
 
-    err = js_create_reference(env, argv[6], 1, &handle->on_mouse_up);
-    assert(err == 0);
-
-    err = js_create_reference(env, argv[7], 1, &handle->on_click);
+    err = js_create_reference(env, argv[6], 1, &handle->on_click);
     assert(err == 0);
 
     [handle setTarget:handle];

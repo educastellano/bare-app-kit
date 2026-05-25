@@ -192,10 +192,9 @@ bare_app_kit_button_get_title(js_env_t *env, js_callback_info_t *info) {
   @autoreleasepool {
     BareButton *button = (__bridge BareButton *) handle;
 
-    NSString *titleString = [button title];
-    const char *title = [titleString UTF8String];
+    NSString *title = [button title];
 
-    err = js_create_string_utf8(env, (const utf8_t *) title, -1, &result);
+    err = js_create_string_utf8(env, (const utf8_t *) [title UTF8String], -1, &result);
     assert(err == 0);
   }
 

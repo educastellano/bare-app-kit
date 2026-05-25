@@ -221,13 +221,12 @@ bare_app_kit_button_set_title(js_env_t *env, js_callback_info_t *info) {
   err = js_get_value_string_utf8(env, argv[1], NULL, 0, &len);
   assert(err == 0);
 
-  char *title = malloc(len + 1);
-  assert(title != NULL);
+  len += 1 /* NULL */;
 
-  err = js_get_value_string_utf8(env, argv[1], (utf8_t *) title, len + 1, &len);
+  char *title = malloc(len);
+
+  err = js_get_value_string_utf8(env, argv[1], (utf8_t *) title, len, &len);
   assert(err == 0);
-
-  title[len] = '\0';
 
   @autoreleasepool {
     BareButton *button = (__bridge BareButton *) handle;

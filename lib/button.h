@@ -234,5 +234,7 @@ bare_app_kit_button_set_title(js_env_t *env, js_callback_info_t *info) {
     [button setTitle:[NSString stringWithUTF8String:title]];
   }
 
+  free(title);
+
   return NULL;
 }

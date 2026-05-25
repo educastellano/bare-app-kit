@@ -232,9 +232,7 @@ bare_app_kit_button_set_title(js_env_t *env, js_callback_info_t *info) {
   @autoreleasepool {
     BareButton *button = (__bridge BareButton *) handle;
 
-    NSString *titleString = [NSString stringWithUTF8String:title];
-
-    [button setTitle:titleString];
+    [button setTitle:[NSString stringWithUTF8String:title]];
   }
 
   return NULL;

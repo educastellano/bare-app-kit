@@ -5,6 +5,7 @@
 
 #import <AppKit/AppKit.h>
 
+#import "lib/button.h"
 #import "lib/window.h"
 
 static js_value_t *
@@ -19,6 +20,10 @@ bare_app_kit_exports(js_env_t *env, js_value_t *exports) {
     err = js_set_named_property(env, exports, name, val); \
     assert(err == 0); \
   }
+
+  V("buttonInit", bare_app_kit_button_init)
+  V("buttonGetTitle", bare_app_kit_button_get_title)
+  V("buttonSetTitle", bare_app_kit_button_set_title)
 
   V("windowInit", bare_app_kit_window_init)
   V("windowContentView", bare_app_kit_window_content_view)

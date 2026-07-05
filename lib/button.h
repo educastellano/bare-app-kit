@@ -137,37 +137,7 @@ bare_app_kit_button_init(js_env_t *env, js_callback_info_t *info) {
 }
 
 static js_value_t *
-bare_app_kit_button_get_title(js_env_t *env, js_callback_info_t *info) {
-  int err;
-
-  size_t argc = 1;
-  js_value_t *argv[1];
-
-  err = js_get_callback_info(env, info, &argc, argv, NULL, NULL);
-  assert(err == 0);
-
-  assert(argc == 1);
-
-  void *handle;
-  err = js_get_value_external(env, argv[0], &handle);
-  assert(err == 0);
-
-  js_value_t *result;
-
-  @autoreleasepool {
-    BareButton *button = (__bridge BareButton *) handle;
-
-    NSString *title = [button title];
-
-    err = js_create_string_utf8(env, (const utf8_t *) [title UTF8String], -1, &result);
-    assert(err == 0);
-  }
-
-  return result;
-}
-
-static js_value_t *
-bare_app_kit_button_set_title(js_env_t *env, js_callback_info_t *info) {
+bare_app_kit_button_title(js_env_t *env, js_callback_info_t *info) {
   int err;
 
   size_t argc = 2;
@@ -176,30 +146,39 @@ bare_app_kit_button_set_title(js_env_t *env, js_callback_info_t *info) {
   err = js_get_callback_info(env, info, &argc, argv, NULL, NULL);
   assert(err == 0);
 
-  assert(argc == 2);
+  assert(argc == 1 || argc == 2);
 
   void *handle;
   err = js_get_value_external(env, argv[0], &handle);
   assert(err == 0);
 
-  size_t len;
-  err = js_get_value_string_utf8(env, argv[1], NULL, 0, &len);
-  assert(err == 0);
-
-  len += 1 /* NULL */;
-
-  char *title = malloc(len);
-
-  err = js_get_value_string_utf8(env, argv[1], (utf8_t *) title, len, &len);
-  assert(err == 0);
+  js_value_t *result = NULL;
 
   @autoreleasepool {
     BareButton *button = (__bridge BareButton *) handle;
 
-    [button setTitle:[NSString stringWithUTF8String:title]];
+    if (argc == 1) {
+      NSString *title = [button title];
+
+      err = js_create_string_utf8(env, (const utf8_t *) [title UTF8String], -1, &result);
+      assert(err == 0);
+    } else {
+      size_t len;
+      err = js_get_value_string_utf8(env, argv[1], NULL, 0, &len);
+      assert(err == 0);
+
+      len += 1 /* NULL */;
+
+      char *title = malloc(len);
+
+      err = js_get_value_string_utf8(env, argv[1], (utf8_t *) title, len, &len);
+      assert(err == 0);
+
+      [button setTitle:[NSString stringWithUTF8String:title]];
+
+      free(title);
+    }
   }
 
-  free(title);
-
-  return NULL;
+  return result;
 }

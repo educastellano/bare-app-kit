@@ -27,8 +27,7 @@ bare_app_kit_exports(js_env_t *env, js_value_t *exports) {
   }
 
   V("buttonInit", bare_app_kit_button_init)
-  V("buttonGetTitle", bare_app_kit_button_get_title)
-  V("buttonSetTitle", bare_app_kit_button_set_title)
+  V("buttonTitle", bare_app_kit_button_title)
 
   V("controlEnabled", bare_app_kit_control_enabled)
   V("controlContinuous", bare_app_kit_control_continuous)

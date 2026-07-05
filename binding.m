@@ -7,6 +7,7 @@
 
 #import "lib/button.h"
 #import "lib/control.h"
+#import "lib/slider.h"
 #import "lib/switch.h"
 #import "lib/text.h"
 #import "lib/text-field.h"
@@ -43,6 +44,19 @@ bare_app_kit_exports(js_env_t *env, js_value_t *exports) {
   V("controlDoubleValue", bare_app_kit_control_double_value)
   V("controlSizeToFit", bare_app_kit_control_size_to_fit)
   V("controlPerformClick", bare_app_kit_control_perform_click)
+
+  V("sliderInit", bare_app_kit_slider_init)
+  V("sliderMinValue", bare_app_kit_slider_min_value)
+  V("sliderMaxValue", bare_app_kit_slider_max_value)
+  V("sliderAltIncrementValue", bare_app_kit_slider_alt_increment_value)
+  V("sliderKnobThickness", bare_app_kit_slider_knob_thickness)
+  V("sliderVertical", bare_app_kit_slider_vertical)
+  V("sliderType", bare_app_kit_slider_type)
+  V("sliderNumberOfTickMarks", bare_app_kit_slider_number_of_tick_marks)
+  V("sliderTickMarkPosition", bare_app_kit_slider_tick_mark_position)
+  V("sliderAllowsTickMarkValuesOnly", bare_app_kit_slider_allows_tick_mark_values_only)
+  V("sliderTickMarkValueAtIndex", bare_app_kit_slider_tick_mark_value_at_index)
+  V("sliderClosestTickMarkValueToValue", bare_app_kit_slider_closest_tick_mark_value_to_value)
 
   V("switchInit", bare_app_kit_switch_init)
   V("switchState", bare_app_kit_switch_state)
@@ -105,6 +119,9 @@ bare_app_kit_exports(js_env_t *env, js_value_t *exports) {
   V("CONTROL_STATE_OFF", NSControlStateValueOff)
   V("CONTROL_STATE_ON", NSControlStateValueOn)
 
+  V("SLIDER_TYPE_LINEAR", NSSliderTypeLinear)
+  V("SLIDER_TYPE_CIRCULAR", NSSliderTypeCircular)
+
   V("TEXT_ALIGNMENT_LEFT", NSTextAlignmentLeft)
   V("TEXT_ALIGNMENT_RIGHT", NSTextAlignmentRight)
   V("TEXT_ALIGNMENT_CENTER", NSTextAlignmentCenter)
@@ -113,6 +130,11 @@ bare_app_kit_exports(js_env_t *env, js_value_t *exports) {
 
   V("TEXT_FIELD_BEZEL_STYLE_SQUARE", NSTextFieldSquareBezel)
   V("TEXT_FIELD_BEZEL_STYLE_ROUNDED", NSTextFieldRoundedBezel)
+
+  V("TICK_MARK_POSITION_BELOW", NSTickMarkPositionBelow)
+  V("TICK_MARK_POSITION_ABOVE", NSTickMarkPositionAbove)
+  V("TICK_MARK_POSITION_LEADING", NSTickMarkPositionLeading)
+  V("TICK_MARK_POSITION_TRAILING", NSTickMarkPositionTrailing)
 
   V("WINDOW_STYLE_MASK_BORDERLESS", NSWindowStyleMaskBorderless)
   V("WINDOW_STYLE_MASK_TITLED", NSWindowStyleMaskTitled)

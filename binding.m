@@ -7,6 +7,7 @@
 
 #import "lib/button.h"
 #import "lib/control.h"
+#import "lib/text-field.h"
 #import "lib/window.h"
 
 static js_value_t *
@@ -41,6 +42,17 @@ bare_app_kit_exports(js_env_t *env, js_value_t *exports) {
   V("controlSizeToFit", bare_app_kit_control_size_to_fit)
   V("controlPerformClick", bare_app_kit_control_perform_click)
 
+  V("textFieldInit", bare_app_kit_text_field_init)
+  V("textFieldPlaceholderString", bare_app_kit_text_field_placeholder_string)
+  V("textFieldBordered", bare_app_kit_text_field_bordered)
+  V("textFieldBezeled", bare_app_kit_text_field_bezeled)
+  V("textFieldEditable", bare_app_kit_text_field_editable)
+  V("textFieldSelectable", bare_app_kit_text_field_selectable)
+  V("textFieldDrawsBackground", bare_app_kit_text_field_draws_background)
+  V("textFieldBezelStyle", bare_app_kit_text_field_bezel_style)
+  V("textFieldMaximumNumberOfLines", bare_app_kit_text_field_maximum_number_of_lines)
+  V("textFieldSelectText", bare_app_kit_text_field_select_text)
+
   V("windowInit", bare_app_kit_window_init)
   V("windowContentView", bare_app_kit_window_content_view)
   V("windowTitlebarAppearsTransparent", bare_app_kit_window_titlebar_appears_transparent)
@@ -72,6 +84,9 @@ bare_app_kit_exports(js_env_t *env, js_value_t *exports) {
   V("CONTROL_SIZE_SMALL", NSControlSizeSmall)
   V("CONTROL_SIZE_MINI", NSControlSizeMini)
   V("CONTROL_SIZE_LARGE", NSControlSizeLarge)
+
+  V("TEXT_FIELD_BEZEL_STYLE_SQUARE", NSTextFieldSquareBezel)
+  V("TEXT_FIELD_BEZEL_STYLE_ROUNDED", NSTextFieldRoundedBezel)
 #undef V
 
   return exports;

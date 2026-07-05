@@ -1,4 +1,5 @@
 exports.Button = require('./lib/button')
 exports.Control = require('./lib/control')
+exports.Text = require('./lib/text')
 exports.TextField = require('./lib/text-field')
 exports.Window = require('./lib/window')

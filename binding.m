@@ -7,6 +7,7 @@
 
 #import "lib/button.h"
 #import "lib/control.h"
+#import "lib/text.h"
 #import "lib/text-field.h"
 #import "lib/window.h"
 
@@ -42,6 +43,25 @@ bare_app_kit_exports(js_env_t *env, js_value_t *exports) {
   V("controlSizeToFit", bare_app_kit_control_size_to_fit)
   V("controlPerformClick", bare_app_kit_control_perform_click)
 
+  V("textInit", bare_app_kit_text_init)
+  V("textString", bare_app_kit_text_string)
+  V("textEditable", bare_app_kit_text_editable)
+  V("textSelectable", bare_app_kit_text_selectable)
+  V("textRichText", bare_app_kit_text_rich_text)
+  V("textImportsGraphics", bare_app_kit_text_imports_graphics)
+  V("textFieldEditor", bare_app_kit_text_field_editor)
+  V("textUsesFontPanel", bare_app_kit_text_uses_font_panel)
+  V("textDrawsBackground", bare_app_kit_text_draws_background)
+  V("textRulerVisible", bare_app_kit_text_ruler_visible)
+  V("textAlignment", bare_app_kit_text_alignment)
+  V("textBaseWritingDirection", bare_app_kit_text_base_writing_direction)
+  V("textSizeToFit", bare_app_kit_text_size_to_fit)
+  V("textCopy", bare_app_kit_text_copy)
+  V("textCut", bare_app_kit_text_cut)
+  V("textDelete", bare_app_kit_text_delete)
+  V("textPaste", bare_app_kit_text_paste)
+  V("textSelectAll", bare_app_kit_text_select_all)
+
   V("textFieldInit", bare_app_kit_text_field_init)
   V("textFieldPlaceholderString", bare_app_kit_text_field_placeholder_string)
   V("textFieldBordered", bare_app_kit_text_field_bordered)
@@ -72,6 +92,20 @@ bare_app_kit_exports(js_env_t *env, js_value_t *exports) {
     assert(err == 0); \
   }
 
+  V("CONTROL_SIZE_REGULAR", NSControlSizeRegular)
+  V("CONTROL_SIZE_SMALL", NSControlSizeSmall)
+  V("CONTROL_SIZE_MINI", NSControlSizeMini)
+  V("CONTROL_SIZE_LARGE", NSControlSizeLarge)
+
+  V("TEXT_ALIGNMENT_LEFT", NSTextAlignmentLeft)
+  V("TEXT_ALIGNMENT_RIGHT", NSTextAlignmentRight)
+  V("TEXT_ALIGNMENT_CENTER", NSTextAlignmentCenter)
+  V("TEXT_ALIGNMENT_JUSTIFIED", NSTextAlignmentJustified)
+  V("TEXT_ALIGNMENT_NATURAL", NSTextAlignmentNatural)
+
+  V("TEXT_FIELD_BEZEL_STYLE_SQUARE", NSTextFieldSquareBezel)
+  V("TEXT_FIELD_BEZEL_STYLE_ROUNDED", NSTextFieldRoundedBezel)
+
   V("WINDOW_STYLE_MASK_BORDERLESS", NSWindowStyleMaskBorderless)
   V("WINDOW_STYLE_MASK_TITLED", NSWindowStyleMaskTitled)
   V("WINDOW_STYLE_MASK_CLOSABLE", NSWindowStyleMaskClosable)
@@ -80,13 +114,9 @@ bare_app_kit_exports(js_env_t *env, js_value_t *exports) {
   V("WINDOW_STYLE_MASK_FULL_SCREEN", NSWindowStyleMaskFullScreen)
   V("WINDOW_STYLE_MASK_FULL_SIZE_CONTENT_VIEW", NSWindowStyleMaskFullSizeContentView)
 
-  V("CONTROL_SIZE_REGULAR", NSControlSizeRegular)
-  V("CONTROL_SIZE_SMALL", NSControlSizeSmall)
-  V("CONTROL_SIZE_MINI", NSControlSizeMini)
-  V("CONTROL_SIZE_LARGE", NSControlSizeLarge)
-
-  V("TEXT_FIELD_BEZEL_STYLE_SQUARE", NSTextFieldSquareBezel)
-  V("TEXT_FIELD_BEZEL_STYLE_ROUNDED", NSTextFieldRoundedBezel)
+  V("WRITING_DIRECTION_NATURAL", NSWritingDirectionNatural)
+  V("WRITING_DIRECTION_LEFT_TO_RIGHT", NSWritingDirectionLeftToRight)
+  V("WRITING_DIRECTION_RIGHT_TO_LEFT", NSWritingDirectionRightToLeft)
 #undef V
 
   return exports;

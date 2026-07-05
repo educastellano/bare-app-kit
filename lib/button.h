@@ -11,7 +11,6 @@
   js_env_t *env;
   js_ref_t *ctx;
   js_ref_t *on_mouse_down;
-  js_ref_t *on_mouse_up;
   js_ref_t *on_click;
 }
 
@@ -23,9 +22,6 @@
   int err; 
 
   err = js_delete_reference(env, on_mouse_down);
-  assert(err == 0);
-
-  err = js_delete_reference(env, on_mouse_up);
   assert(err == 0);
 
   err = js_delete_reference(env, on_click);

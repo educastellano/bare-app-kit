@@ -7,6 +7,7 @@
 
 #import "lib/button.h"
 #import "lib/control.h"
+#import "lib/switch.h"
 #import "lib/text.h"
 #import "lib/text-field.h"
 #import "lib/window.h"
@@ -42,6 +43,9 @@ bare_app_kit_exports(js_env_t *env, js_value_t *exports) {
   V("controlDoubleValue", bare_app_kit_control_double_value)
   V("controlSizeToFit", bare_app_kit_control_size_to_fit)
   V("controlPerformClick", bare_app_kit_control_perform_click)
+
+  V("switchInit", bare_app_kit_switch_init)
+  V("switchState", bare_app_kit_switch_state)
 
   V("textInit", bare_app_kit_text_init)
   V("textString", bare_app_kit_text_string)
@@ -96,6 +100,10 @@ bare_app_kit_exports(js_env_t *env, js_value_t *exports) {
   V("CONTROL_SIZE_SMALL", NSControlSizeSmall)
   V("CONTROL_SIZE_MINI", NSControlSizeMini)
   V("CONTROL_SIZE_LARGE", NSControlSizeLarge)
+
+  V("CONTROL_STATE_MIXED", NSControlStateValueMixed)
+  V("CONTROL_STATE_OFF", NSControlStateValueOff)
+  V("CONTROL_STATE_ON", NSControlStateValueOn)
 
   V("TEXT_ALIGNMENT_LEFT", NSTextAlignmentLeft)
   V("TEXT_ALIGNMENT_RIGHT", NSTextAlignmentRight)
